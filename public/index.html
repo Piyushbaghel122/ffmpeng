@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reel Processing</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <div>
+          <p class="eyebrow">BullMQ + FFmpeg</p>
+          <h1>Reel processing studio</h1>
+          <p class="subtitle">
+            Upload a video, queue the heavy work, and watch its processing
+            state update.
+          </p>
+        </div>
+        <a class="dashboard-link" href="/admin/queues">Queue dashboard</a>
+      </header>
+
+      <section class="grid">
+        <form id="upload-form" class="panel">
+          <h2>New reel</h2>
+
+          <label>
+            User ObjectId
+            <input
+              id="user-id"
+              name="userId"
+              placeholder="64f1a2b3c4d5e6f789012345"
+              pattern="[a-fA-F0-9]{24}"
+              required
+            />
+          </label>
+
+          <label>
+            Caption
+            <textarea
+              id="caption"
+              name="caption"
+              maxlength="2200"
+              placeholder="Write a caption..."
+            ></textarea>
+          </label>
+
+          <label class="file-field">
+            Video
+            <input id="video" name="video" type="file" accept="video/*" required />
+            <span id="file-name">Choose an MP4, MOV, or other video</span>
+          </label>
+
+          <button id="submit-button" type="submit">Queue reel</button>
+
+          <div class="progress-track" aria-label="Upload progress">
+            <div id="upload-progress" class="progress-bar"></div>
+          </div>
+          <p id="form-message" class="message" role="status"></p>
+        </form>
+
+        <section class="panel status-panel">
+          <div class="status-heading">
+            <h2>Current job</h2>
+            <span id="status-badge" class="badge idle">idle</span>
+          </div>
+
+          <div class="job-progress">
+            <span id="job-progress-label">No job submitted</span>
+            <strong id="job-progress-value">0%</strong>
+          </div>
+          <div class="progress-track large">
+            <div id="job-progress" class="progress-bar processing"></div>
+          </div>
+
+          <dl id="job-details">
+            <div>
+              <dt>Reel ID</dt>
+              <dd id="reel-id">-</dd>
+            </div>
+            <div>
+              <dt>Views</dt>
+              <dd id="views">-</dd>
+            </div>
+          </dl>
+
+          <div id="result" class="result hidden">
+            <video id="result-video" controls playsinline></video>
+            <a id="video-link" target="_blank" rel="noreferrer">Open video</a>
+          </div>
+
+          <p id="job-error" class="message error"></p>
+        </section>
+      </section>
+
+      <section class="panel queue-panel">
+        <div>
+          <p class="eyebrow">Live queue</p>
+          <h2>Worker activity</h2>
+        </div>
+        <div id="queue-counts" class="queue-counts">
+          <span>Loading...</span>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
